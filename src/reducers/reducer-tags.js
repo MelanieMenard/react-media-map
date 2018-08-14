@@ -5,6 +5,8 @@
 /*   So I make it normalised to optimise the state shape
 /* ------------------------------------------- */
 
+import { SET_SELECTED_TAG } from '../actions/actions-tags';
+
 
 const defaultState = {
 
@@ -54,6 +56,14 @@ const defaultState = {
 const tagsReducer = (state = defaultState, action) => {
 
   switch (action.type) {
+
+    case SET_SELECTED_TAG:
+
+      // either set the selected tag, and unselect it if user clicked an already selected tag
+      return {
+        ...state,
+        selectedTag: (state.selectedTag !== action.payload.tagId) ? action.payload.tagId : null
+      };
 
 
     /* - Any other action do not affect this reducer, return existing state - */
