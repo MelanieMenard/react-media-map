@@ -49,7 +49,7 @@ const mediaReducer = (state = defaultState, action) => {
         },
         mediaItems: [
           ...state.mediaItems,
-          ... action.payload.items
+          ...action.payload.items
         ]
       };
  

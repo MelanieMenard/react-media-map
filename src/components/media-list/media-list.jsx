@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAllMedia } from '../actions/actions-media';
+import { fetchAllMedia } from '../../actions/actions-media';
+import './media-list.css';
 
 
 /* --- Media item presentational component --- */

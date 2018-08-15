@@ -1,0 +1,29 @@
+/*---------------------------------------------------------------------*/
+/*  Shared SASS file
+/*  Consistent styles for the whole React App that individual component 'pull from'
+/*  Order the SASS files get compiled:
+/*  1) External libs
+/*  2) Shared variables SASS files
+/*  3) TODO: if there is a theme then I think we would load the theme variables override at that stage
+/*  3) A few default styles (styling on html elements, not classes)
+/*---------------------------------------------------------------------*/
+
+// Shared variables
+@import "variables/variables_color";
+@import "variables/variables_fonts";
+@import "variables/variables_grid";
+@import "variables/variables_other";
+
+// Base SASS files
+// https://smacss.com/book/type-base
+@import "base/reset";
+
+
+// Base SASS files
+// https://smacss.com/book/type-base
+@import "base/base";
+@import "base/typography";
+
+// Helper (shared functions and utilities) SASS files
+@import "helpers/mixins";
+

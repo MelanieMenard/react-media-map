@@ -1,0 +1,22 @@
+/*---------------------------------------------------------------------*/
+/*  SASS variables
+/*  Variables neither color/font/grid go there
+/*  Order the SASS files get compiled:
+/*  1) External libs
+/*  2) Core variables SASS files 
+/*  3) theme variable overrides
+/*  4) other core SASS files
+/*  5) other theme SASS overrides
+/*---------------------------------------------------------------------*/
+
+/* Component Variables */
+
+$standard_content_margin: 20px;
+$large_content_margin: 30px;
+
+$small_content_padding: 10px;
+$standard_content_padding: 15px;
+$large_content_padding: 20px;
+
+
+

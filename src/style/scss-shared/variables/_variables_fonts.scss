@@ -1,0 +1,25 @@
+/*---------------------------------------------------------------------*/
+/*  SASS variables
+/*  Font variables go there except
+/*  Order the SASS files get compiled:
+/*  1) External libs
+/*  2) Core variables SASS files 
+/*  3) theme variable overrides
+/*  4) other core SASS files
+/*  5) other theme SASS overrides
+/*---------------------------------------------------------------------*/
+
+/** Font URLS **/
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,500,600i,700);
+
+$raleway: 'Raleway', sans-serif;
+
+$font-size_extra_small: 12px;
+$font_size_small: 14px;
+$font_size_standard: 18px;
+$font_size_large: 24px;
+$font_size_extra_large: 36px;
+
+$line_height_extra_small: 12px;
+$line_height_small: 14px;
+$line_height_standard: 18px;

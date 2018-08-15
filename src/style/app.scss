@@ -1,28 +1,49 @@
-.App {
+@import 'scss-shared/_shared.scss';
+
+body {
+  background-color: $brand_medium;
+}
+
+.app-header {
+  background-color: $brand_dark;
+  min-height: $header-height;
+  padding: $large_content_padding; 
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.app-title {
+  text-transform: uppercase;
+  color: $brand_accent_light;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.app-content {
+  padding: $large_content_padding;
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    margin: $standard_content_margin
+  } 
 }
 
-.App-title {
-  font-size: 1.5em;
+.app-sidebar {
+  @media screen and (max-width: $breakpoint-tablet-portrait-max-width) {
+    width: 100%;
+    float: none;
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    float: right;
+    width: $sidebar-width;
+  }  
 }
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.app-main-content {
+  @media screen and (max-width: $breakpoint-tablet-portrait-max-width) {
+    width: 100%;
+    float: none;
+    margin-top: $standard_content_margin;
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    float: left;
+    width: calc(100% - #{$sidebar-width + $standard_content_margin});
+    margin-right: $standard_content_margin;
+  } 
+  
 }

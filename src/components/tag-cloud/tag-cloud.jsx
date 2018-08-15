@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setSelectedTag } from '../actions/actions-tags';
+import { setSelectedTag } from '../../actions/actions-tags';
+import './tag-cloud.css';
 
 
 /* --- Tag item presentational component --- */

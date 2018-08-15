@@ -1,0 +1,52 @@
+/*---------------------------------------------------------------------*/
+/*  Typography
+/*  Include all fonts and define styles
+/*---------------------------------------------------------------------*/
+
+
+/** Font Styles **/
+body, button,p, li, a, h1, h2, h3, h4 {
+  font-family: $raleway;
+  font-weight: normal;
+  color: $text-color;
+  word-wrap: break-word;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+p, li {
+  font-weight: 300;
+  font-size: $font_size_small;
+  line-height: $line_height_standard;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: $font_size_extra_large;
+  line-height: $font_size_extra_large;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: $font_size_large;
+  line-height: $font_size_large;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: $font_size_standard;
+  line-height: $font_size_standard;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: $font_size_small;
+  line-height: $line_height_standard;
+}
+
+a {
+  font-weight: 600;
+  color: $text-color;
+  &:hover {
+    color: $text_hover_color;
+  }
+}
