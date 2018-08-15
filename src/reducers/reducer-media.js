@@ -11,8 +11,8 @@ import {
 
 
 const defaultState = {
-  // whether a fetch request is currently in progress
-  isFetching: false,
+  // keep track of which requests are fetching, since mediaItems is a merging of several data sources
+  isFetching: {},
   // media items from API
   // in a real app with heavy data crunching on them, it would be best to denormalize the date for efficiency
   // https://redux.js.org/recipes/structuringreducers/normalizingstateshape#normalizing-nested-data
@@ -30,22 +30,26 @@ const mediaReducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        isFetching: true
+        isFetching: {
+          ...state.isFetching,
+          [action.payload.tagId]: true
+        }
       };
 
 
     /* - A fetch request successfully returned data - */
     case FETCH_MEDIA_SUCCESS:
 
-      let fetchedItems = action.payload.data;
-
       // append new items to end of existing array
       return {
         ...state,
-        isFetching: false,
+        isFetching: {
+          ...state.isFetching,
+          [action.payload.tagId]: false
+        },
         mediaItems: [
           ...state.mediaItems,
-          ...fetchedItems
+          ... action.payload.items
         ]
       };
  
@@ -56,7 +60,10 @@ const mediaReducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        isFetching: false
+        isFetching: {
+          ...state.isFetching,
+          [action.payload.tagId]: false
+        }
       };
 
 

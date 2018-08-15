@@ -25,24 +25,25 @@ const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
 
 /* - Fetch media items synchronous actions - */
 
-const fetchMediaRequest = (searchString) => ({
+const fetchMediaRequest = (tagId) => ({
   type: FETCH_MEDIA_REQUEST,
   payload: {
-    searchString
+    tagId
   }
 });
 
-const fetchMediaSuccess = (data) => ({
+const fetchMediaSuccess = (tagId, items) => ({
   type: FETCH_MEDIA_SUCCESS,
   payload: {
-    data
+    tagId,
+    items
   }
 });
 
-const fetchMediaError = (error) => ({
+const fetchMediaError = (tagId) => ({
   type: FETCH_MEDIA_ERROR,
   payload: {
-    error
+    tagId
   }
 });
 
@@ -58,7 +59,7 @@ const fetchAllMedia = () => (dispatch, getState) => {
     let searchString = tags.locationsById[tagId].searchQuery;
 
     // notify reducer fetching has started
-    dispatch(fetchMediaRequest (searchString));
+    dispatch(fetchMediaRequest (tagId));
 
     // REST get request
     return getFlickrFeedQuery (searchString)
@@ -71,12 +72,12 @@ const fetchAllMedia = () => (dispatch, getState) => {
           return item;
         });
 
-        dispatch(fetchMediaSuccess(taggedItems));
+        dispatch(fetchMediaSuccess(tagId,taggedItems));
 
       })
       .catch((error)=> {
         console.log('fetchMedia ERROR for '+searchString+' ', error);
-        dispatch(fetchMediaError(error));
+        dispatch(fetchMediaError(tagId, error));
       });
   });  
 };

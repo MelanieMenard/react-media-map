@@ -107,9 +107,12 @@ const getFilteredMediaItems = (state) => {
 // the parent components can still pass props directly to the presentational component, and mapStateToProps can access them as ownProps
 // the presentational component does not know whether its props come from the parent (ownProps) or the container, the difference is only visible in mapStateToProps
 const mapStateToProps = (state, ownProps) => {
+  // isFetching is an object listing all requests by tag, see if any is still fetching
+  let fetchingStatus = Object.values(state.media.isFetching);
+  let isFetching = (fetchingStatus) ? fetchingStatus.includes(true) : false;
   return {
     mediaItems: getFilteredMediaItems(state),
-    isFetching: state.media.isFetching
+    isFetching: isFetching
   };
 };
 

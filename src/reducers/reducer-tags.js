@@ -21,7 +21,7 @@ const defaultState = {
     },
     "charleston" : {
       displayName : "Charleston",
-      searchQuery : "Charleston Sussex",
+      searchQuery : "Charleston House Sussex",
     },
     "farleyFarm" : {
       displayName : "Farley Farm",
