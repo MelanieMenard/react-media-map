@@ -6,7 +6,7 @@
 /*   https://github.com/redux-utilities/flux-standard-action
 /* ------------------------------------------- */
 
-import { getRESTQuery } from '../queries/axios-queries';
+import { getFlickrFeedQuery } from '../queries/axios-queries';
 
 
 /* --- Actions Types --- */
@@ -49,32 +49,42 @@ const fetchMediaError = (error) => ({
 /* - Fetch media items 'thunk' asynchronous action made by combining synchronous actions  - */
 /* - Thunk Actions replace controllers in functional programming Redux apps - */
 /* - Thunk Actions are the place to do all 'impure' business logic such as fetching data and routing - */
-const fetchMedia = (searchString) => (dispatch, getState) => {
+const fetchAllMedia = () => (dispatch, getState) => {
 
-  // notify reducer fetching has started
-  dispatch(fetchMediaRequest (searchString));
+  // Fetch relevant media items for each location in the tag list
+  const tags = getState().tags;
+  tags.allLocations.forEach((tagId) => {
 
-  // endpoint to get it to compile only, query not formatted properly
-  let flickrBaseUrl = 'http://www.flickr.com/services/feeds/photos_public.gne';
+    let searchString = tags.locationsById[tagId].searchQuery;
 
-  // REST get request
-  return getRESTQuery (flickrBaseUrl, searchString)
-    .then(response => {
+    // notify reducer fetching has started
+    dispatch(fetchMediaRequest (searchString));
 
-      console.log('fetchMedia RESPONSE', response);
-      dispatch(fetchMediaSuccess(response));
+    // REST get request
+    return getFlickrFeedQuery (searchString)
+      .then((response) => {
+        console.log('fetchMedia RESPONSE for '+searchString+' ', response);
 
-    })
-    .catch((error)=> {
-      console.log('fetchMedia ERROR', error);
-      dispatch(fetchMediaError(error));
-    })
+        // add tag to the result
+        let taggedItems = response.map((item) => {
+          item.tags = [tagId];
+          return item;
+        });
+
+        dispatch(fetchMediaSuccess(taggedItems));
+
+      })
+      .catch((error)=> {
+        console.log('fetchMedia ERROR for '+searchString+' ', error);
+        dispatch(fetchMediaError(error));
+      });
+  });  
 };
 
 
 
 export {
-  fetchMedia,
+  fetchAllMedia,
   FETCH_MEDIA_REQUEST,
   FETCH_MEDIA_SUCCESS,
   FETCH_MEDIA_ERROR,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMedia } from '../actions/actions-media';
+import { fetchAllMedia } from '../actions/actions-media';
 
 
 /* --- Media item presentational component --- */
@@ -13,7 +13,7 @@ class Media extends React.Component {
     return (
       <li className="media-item">
         <a href={media.link} target="_blank">
-          <img title={media.title} src={media.media.m} alt={media.title} className="thumb" />' 
+          <img title={media.title} src={media.image} alt={media.title} className="thumb" />' 
           <p className="media-title">{media.title}</p>
         </a>
       </li>
@@ -96,7 +96,7 @@ MediaList.propTypes = {
 const getFilteredMediaItems = (state) => {
   // return matching media if a tag is selected
   if (state.tags.selectedTag) {
-    return state.media.mediaItems.filter(media => media.tags.includes[state.tags.selectedTag]);
+    return state.media.mediaItems.filter(media => media.tags.includes(state.tags.selectedTag));
   }
   // otherwise return all media
   else {
@@ -116,7 +116,7 @@ const mapStateToProps = (state, ownProps) => {
 // mapDispatchToProps tells the container component how to dispatch actions to the redux store
 const mapDispatchToProps = dispatch => ({
   fetchMedia: () => {
-    dispatch( fetchMedia());
+    dispatch( fetchAllMedia());
   }
 });
 

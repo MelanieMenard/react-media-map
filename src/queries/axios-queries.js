@@ -27,18 +27,53 @@ axios.defaults.httpsAgent = new https.Agent({ keepAlive: true });
 const axiosInstance = axios.create();
 
 
-// utility function for posting a REST GET query to axios
+// utility function for posting a REST GET query to Flickr Public Feed API via axios
 // returns a promise with the response
-const getRESTQuery = (endpoint, query) => {
+const getFlickrFeedQuery = (searchString) => {
 
-  return axiosInstance.get(endpoint, {params: query})
-    .then((response) => response)
-    .catch((error) => console.log('ERROR!!! ',error));
+	// Flickr Public Feed API url
+	// https://www.flickr.com/services/feeds/docs/photos_public/
+	const endpoint = 'http://www.flickr.com/services/feeds/photos_public.gne';
+
+	const formattedQueryTerms = searchString.split(' ').join(',');
+	// nojsoncallback necessary to make the API return plain JSON rather than JSONP
+	const query = {
+    	tags: formattedQueryTerms,
+    	format: "json",
+    	nojsoncallback: "true"
+  	};
+
+  	// !!! 'Content-Type': 'application/x-www-form-urlencoded' was an attempt to get Flickr API to acept CORS request, however it did not work
+  	// workaround is to install Chrome extension: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
+  	// this problem would not happen in a production app using API designed to work with it
+  	// I had only used Flickr API with jquery ajax and JSONP so never had this problem before, and used an API I already knew for this code test, as short on time.
+  	const requestConfig = {
+  		params: query,
+  		headers: {
+  			'Content-Type': 'application/x-www-form-urlencoded'
+  		}
+  	};
+
+  	return axiosInstance.get(endpoint, requestConfig)
+    .then((response) => {
+    	// modify the image filename in each image result as Flickr returns tiny thumbnails
+    	let formattedResponse = response.data.items.map((item) => {
+    		let formattedResult = {
+    			title: item.title,
+    			author: item.author,
+    			link: item.link,
+    			image: item.media.m.replace("_m.jpg", ".jpg")
+    		}
+    		return formattedResult;
+    	});
+        return formattedResponse;
+    })
+    .catch((error) => console.log('getFlickrFeedQuery ERROR!!! ',error));
 };
 
 
 export {
 	axiosInstance,
-	getRESTQuery
+	getFlickrFeedQuery
 };
 
