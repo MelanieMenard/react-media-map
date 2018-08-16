@@ -1,0 +1,70 @@
+@import 'style/scss-shared/_shared.scss';
+
+.media-list
+{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.media-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $brand_accent_light;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  @media screen and (max-width: $breakpoint-small-smartphone-max-width) {
+    width: 100%;
+    margin-bottom: $small_content_margin;
+  }
+  @media screen and (min-width: $breakpoint-large-smartphone-min-width) and (max-width: $breakpoint-tablet-portrait-max-width) {
+    margin-bottom: $small_content_margin;
+    margin-right: $small_content_margin;
+    /* MM: 49% not 50% as 50% cause overflow most likely due to rounding error */
+    /* Possible to calculate perfect fit with justify-content: space-between */
+    /* where space betwen items is adjusted, but then last incomplete row looks odd */
+    width: calc(49% - #{$small_content_margin});
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) and (max-width: $breakpoint-tablet-landscape-max-width) {
+    margin-bottom: $small_content_margin;
+    margin-right: $small_content_margin;
+    width: calc(32% - #{$small_content_margin});
+  }
+  @media screen and (min-width: $breakpoint-desktop-min-width) and (max-width: $breakpoint-standard-desktop-max-width){
+    margin-bottom: $medium_content_margin;
+    margin-right: $medium_content_margin;
+    width: calc(24% - #{$medium_content_margin});
+  }
+  @media screen and (min-width: $breakpoint-large-desktop-min-width) {
+    margin-bottom: $standard_content_margin;
+    margin-right: $standard_content_margin;
+    width: calc(15% - #{$medium_content_margin});
+  } 
+}
+
+
+.media-image {
+  width: 100%;
+  @include fixed-ratio (100%);
+  background-style: cover;
+}
+
+.media-info {
+  display: block;
+  width: 100%;
+  background: #333;
+  background: rgba(0,0,0,0.7);
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  position:absolute;
+  bottom: 0;
+}
+
+.media-item .media-title {
+  color: $brand_accent_light;
+  padding: 10px 20px;
+  text-align: center;
+}

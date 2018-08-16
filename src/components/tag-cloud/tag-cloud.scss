@@ -1,0 +1,35 @@
+@import 'style/scss-shared/_shared.scss';
+
+.tag-cloud {
+  text-align: center;
+  @media screen and (max-width: $breakpoint-tablet-portrait-max-width) {
+    padding: $large_content_padding;
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    padding: $large_content_padding $large_content_padding $large_content_padding 0;
+  }  
+}
+
+.tag-item {
+  display: inline-block;
+  margin: 4px 6px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 8px;
+}
+
+.tag-title {
+	display: inline-block;
+	font-size: 20px;
+	line-height: 22px;
+	color: $brand_accent_medium;
+	margin: 0;
+}
+
+.selected .tag-title,
+.tag:hover .tag-title {
+	color: $brand_accent_vivid;
+	font-weight: 900;
+}

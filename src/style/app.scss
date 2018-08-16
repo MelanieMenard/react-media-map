@@ -1,0 +1,49 @@
+@import 'style/scss-shared/_shared.scss';
+
+body {
+  background-color: $brand_medium;
+}
+
+.app-header {
+  background-color: $brand_dark;
+  min-height: $header-height;
+  padding: $large_content_padding; 
+  text-align: center;
+}
+
+.app-title {
+  text-transform: uppercase;
+  color: $brand_accent_light;
+}
+
+.app-content {
+  padding: $large_content_padding;
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    margin: $standard_content_margin
+  } 
+}
+
+.app-sidebar {
+  @media screen and (max-width: $breakpoint-tablet-portrait-max-width) {
+    width: 100%;
+    float: none;
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    float: right;
+    width: $sidebar-width;
+  }  
+}
+
+.app-main-content {
+  @media screen and (max-width: $breakpoint-tablet-portrait-max-width) {
+    width: 100%;
+    float: none;
+    margin-top: $standard_content_margin;
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) {
+    float: left;
+    width: calc(100% - #{$sidebar-width + $standard_content_margin});
+    margin-right: $standard_content_margin;
+  } 
+  
+}

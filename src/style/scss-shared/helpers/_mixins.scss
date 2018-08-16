@@ -1,0 +1,21 @@
+/*---------------------------------------------------------------------*/
+/*  Mixins SASS file
+/*  All mixins go there (custom and borrowed from third party libraries)
+/*---------------------------------------------------------------------*/
+
+@mixin button_hover() {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+/* forces a responsive element to be a fixed ratio */
+/* http://stackoverflow.com/questions/12121090/responsively-change-div-size-keeping-aspect-ratio */
+@mixin fixed-ratio ($height-as-percent-of-width) {
+	&:before {
+    	content: "";
+    	display: block;
+    	padding-top: $height-as-percent-of-width;
+    }
+}
+

@@ -1,0 +1,65 @@
+/*---------------------------------------------------------------------*/
+/*  SASS variables
+/*  Color variables go there except
+/*  Order the SASS files get compiled:
+/*  1) External libs
+/*  2) Core variables SASS files 
+/*  3) theme variable overrides
+/*  4) other core SASS files
+/*  5) other theme SASS overrides
+/*---------------------------------------------------------------------*/
+
+// Instructions for efficient SASS (for easy change and replace)
+
+// Step 1: define your variables as taken from the designs. Give them easy to understand names.
+
+$black: #000000;
+$white: #ffffff;
+$gray: #4C4C4C;
+$light-gray: #f0f0f0;
+
+//Violet	148, 0, 211	#9400D3	
+//Indigo	75, 0, 130	#4B0082	
+//Blue	0, 0, 255	#0000FF	
+//Green	0, 255, 0	#00FF00	
+//Yellow	255, 255, 0	#FFFF00	
+//Orange	255, 127, 0	#FF7F00	
+//Red	255, 0 , 0	#FF0000
+
+$violet: #9400D3;	
+$indigo: #4B0082;	
+$blue: #0000FF;
+$green:	#00FF00;
+$yellow: #FFFF00;	
+$orange: #FF7F00;	
+$red: #FF0000;
+
+$violet_very_dark: #3A0055;
+$violet_dark: #670094;
+$violet_light: #CB82E7;
+$violet_very_light: #ECD0F3;
+
+$brand_dark: $black;
+$brand_medium: $gray;
+$brand_light: $light-gray;
+
+$brand_accent_dark: $violet_dark;
+$brand_accent_vivid: $violet;
+$brand_accent_medium: $violet_light;
+$brand_accent_light: $violet_very_light;
+
+
+// Step 2: map the 'design' variables to context/usage specific variables.
+// That way you can change a colour/padding in one specific context only just by remapping here.
+// if you use the 'design' variables directly in context, you end up with the same trapping of standard CSS
+// where you have have to look at each occurence of a hex colour manually
+// if you want to change the colour for just one element instead of replace it globally.
+
+$text-color: $brand_light;
+$text_hover_color: $brand_accent_light;
+$headings-text-color: $brand_accent_light;
+
+
+
+
+
