@@ -33,7 +33,7 @@ const getFlickrFeedQuery = (searchString) => {
 
 	// Flickr Public Feed API url
 	// https://www.flickr.com/services/feeds/docs/photos_public/
-	const endpoint = 'http://www.flickr.com/services/feeds/photos_public.gne';
+	const endpoint = 'https://api.flickr.com/services/feeds/photos_public.gne';
 
 	const formattedQueryTerms = searchString.split(' ').join(',');
 	// nojsoncallback necessary to make the API return plain JSON rather than JSONP
