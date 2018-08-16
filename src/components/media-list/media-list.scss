@@ -4,7 +4,7 @@
 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: stretch;
 }
 
@@ -15,31 +15,35 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  @media screen and (max-width: $breakpoint-smartphone-max-width) {
+  @media screen and (max-width: $breakpoint-small-smartphone-max-width) {
     width: 100%;
     margin-bottom: $small_content_margin;
   }
-  @media screen and (min-width: $breakpoint-tablet-portrait-min-width) and (max-width: $breakpoint-tablet-portrait-max-width) {
+  @media screen and (min-width: $breakpoint-large-smartphone-min-width) and (max-width: $breakpoint-tablet-portrait-max-width) {
     margin-bottom: $small_content_margin;
-    /* MM: this is to get flexbox to force a margin of 5px on 1 of the 2 boxes */
-    width: calc(50% - #{$small_content_margin/2});
+    margin-right: $small_content_margin;
+    /* MM: 49% not 50% as 50% cause overflow most likely due to rounding error */
+    /* Possible to calculate perfect fit with justify-content: space-between */
+    /* where space betwen items is adjusted, but then last incomplete row looks odd */
+    width: calc(49% - #{$small_content_margin});
   }
   @media screen and (min-width: $breakpoint-tablet-landscape-min-width) and (max-width: $breakpoint-tablet-landscape-max-width) {
     margin-bottom: $small_content_margin;
-    /* MM: this is to get flexbox to force a margin of 5px on 2 of the 3 boxes */
-    width: calc(33% - #{$small_content_margin * 2 / 3});
+    margin-right: $small_content_margin;
+    width: calc(32% - #{$small_content_margin});
   }
   @media screen and (min-width: $breakpoint-desktop-min-width) and (max-width: $breakpoint-standard-desktop-max-width){
     margin-bottom: $medium_content_margin;
-    /* MM: this is to get flexbox to force a margin of 10px on 3 of the 4 boxes */
-    width: calc(25% - #{$medium_content_margin * 3 / 4});
+    margin-right: $medium_content_margin;
+    width: calc(24% - #{$medium_content_margin});
   }
   @media screen and (min-width: $breakpoint-large-desktop-min-width) {
     margin-bottom: $standard_content_margin;
-    /* MM: this is to get flexbox to force a margin of 20px on 5 of the 6 boxes */
-    width: calc(16.6% - #{$medium_content_margin * 5 / 6});
+    margin-right: $standard_content_margin;
+    width: calc(15% - #{$medium_content_margin});
   } 
 }
+
 
 .media-image {
   width: 100%;
