@@ -40,7 +40,7 @@
   @media screen and (min-width: $breakpoint-large-desktop-min-width) {
     margin-bottom: $standard_content_margin;
     margin-right: $standard_content_margin;
-    width: calc(15% - #{$medium_content_margin});
+    width: calc(19% - #{$standard_content_margin});
   } 
 }
 
@@ -49,6 +49,13 @@
   width: 100%;
   @include fixed-ratio (100%);
   background-style: cover;
+  transform: scale3d(1, 1, 1);
+  transition: transform 1s ease-in-out;
+}
+
+.media-item:hover .media-image {
+  transform: scale3d(1.1, 1.1, 1.1);
+  transition: transform 1s ease-in-out;
 }
 
 .media-info {
