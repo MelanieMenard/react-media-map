@@ -1,1 +1,29 @@
 @import 'style/scss-shared/_shared.scss';
+
+.tag-cloud {
+  padding: $standard_content_margin;
+  text-align: center;
+}
+
+.tag-item {
+  display: inline-block;
+  margin: 4px 6px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 8px;
+}
+
+.tag-title {
+	display: inline-block;
+	font-size: 20px;
+	line-height: 22px;
+	color: $brand_accent_medium;
+	margin: 0;
+}
+
+.selected .tag-title {
+	color: $brand_accent_vivid;
+	font-weight: 900;
+}
