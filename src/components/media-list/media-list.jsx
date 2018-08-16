@@ -58,14 +58,26 @@ class MediaList extends React.Component {
     // the media list is not nornalised
     // the list parent component can directly pass the whole object to the child item component, which does not need to be connected to Redux via a container
     const mediaItems = this.props.mediaItems;
-    const isFetching = this.props.isFetching;
 
+    let userMessage = '';
     // show spinner if we are fetching and no items yet returned (otherwise show what is there and update as more get fetched)
+    const showSpinner = this.props.isFetching && !mediaItems.length;
+    const showCORSMessage = this.props.showCORSMessage;
+    if (showSpinner) {
+      userMessage = '<p>Fetching!</p>';
+    }
+    // Flickr API has CORS issues when used with axios. I had only used Flickr API with jquery ajax and JSONP so never had this problem before, and used an API I already knew for this code test, as short on time. 
+    // I implemented simple error handling to tell user to install the workaround Chrome extension: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
+    // this problem would not happen in a production app using API designed to work with it
+    else if (showCORSMessage) {
+      userMessage = '<p>This demo app needs the Allow-Control-Allow-Origin plugin to be able to receive data from the API. Please download the <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en" target="_blank">plugin for Chrome</a>, enable it and reload the app.</p>';
+    }
+  
     return (
       <div className="media">
 
-        {(isFetching && !mediaItems.length) ? (
-          <p>Fetching!</p>
+        {(showSpinner || showCORSMessage) ? (
+          <div className="message" dangerouslySetInnerHTML={{__html: userMessage}}></div>
         ) : (
           <ul className="media-list">
             {mediaItems.map( media => (
@@ -114,12 +126,16 @@ const getFilteredMediaItems = (state) => {
 // the parent components can still pass props directly to the presentational component, and mapStateToProps can access them as ownProps
 // the presentational component does not know whether its props come from the parent (ownProps) or the container, the difference is only visible in mapStateToProps
 const mapStateToProps = (state, ownProps) => {
-  // isFetching is an object listing all requests by tag, see if any is still fetching
-  let fetchingStatus = Object.values(state.media.isFetching);
+  // requestStatus is an object listing all requests by tag, see if any is still fetching
+  let fetchingStatus = Object.values(state.media.requestStatus);
   let isFetching = (fetchingStatus) ? fetchingStatus.includes(true) : false;
+  // MM: because the API does not return data without the CORS plugin
+  // we assume it is the cause of error and show a message telling user to download the plugin
+  let showCORSMessage = (fetchingStatus) ? fetchingStatus.includes('ERROR') : false;
   return {
     mediaItems: getFilteredMediaItems(state),
-    isFetching: isFetching
+    isFetching: isFetching,
+    showCORSMessage: showCORSMessage
   };
 };
 

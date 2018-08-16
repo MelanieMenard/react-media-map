@@ -43,15 +43,8 @@ const getFlickrFeedQuery = (searchString) => {
     	nojsoncallback: "true"
   	};
 
-  	// !!! 'Content-Type': 'application/x-www-form-urlencoded' was an attempt to get Flickr API to acept CORS request, however it did not work
-  	// workaround is to install Chrome extension: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
-  	// this problem would not happen in a production app using API designed to work with it
-  	// I had only used Flickr API with jquery ajax and JSONP so never had this problem before, and used an API I already knew for this code test, as short on time.
   	const requestConfig = {
-  		params: query,
-  		headers: {
-  			'Content-Type': 'application/x-www-form-urlencoded'
-  		}
+  		params: query
   	};
 
   	return axiosInstance.get(endpoint, requestConfig)
@@ -66,9 +59,9 @@ const getFlickrFeedQuery = (searchString) => {
     		}
     		return formattedResult;
     	});
-        return formattedResponse;
-    })
-    .catch((error) => console.log('getFlickrFeedQuery ERROR!!! ',error));
+      return formattedResponse;
+    });
+
 };
 
 

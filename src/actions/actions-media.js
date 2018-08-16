@@ -40,10 +40,11 @@ const fetchMediaSuccess = (tagId, items) => ({
   }
 });
 
-const fetchMediaError = (tagId) => ({
+const fetchMediaError = (tagId, error) => ({
   type: FETCH_MEDIA_ERROR,
   payload: {
-    tagId
+    tagId,
+    error
   }
 });
 
@@ -76,7 +77,7 @@ const fetchAllMedia = () => (dispatch, getState) => {
 
       })
       .catch((error)=> {
-        console.log('fetchMedia ERROR for '+searchString+' ', error);
+        console.log('fetchMedia ERROR for '+searchString, error);
         dispatch(fetchMediaError(tagId, error));
       });
   });  

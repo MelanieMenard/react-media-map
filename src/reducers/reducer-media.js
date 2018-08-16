@@ -11,8 +11,8 @@ import {
 
 
 const defaultState = {
-  // keep track of which requests are fetching, since mediaItems is a merging of several data sources
-  isFetching: {},
+  // keep track of which requests by TagId are fetching (true), feched (false), or an Error Code string
+  requestStatus: {},
   // media items from API
   // in a real app with heavy data crunching on them, it would be best to denormalize the date for efficiency
   // https://redux.js.org/recipes/structuringreducers/normalizingstateshape#normalizing-nested-data
@@ -30,8 +30,8 @@ const mediaReducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        isFetching: {
-          ...state.isFetching,
+        requestStatus: {
+          ...state.requestStatus,
           [action.payload.tagId]: true
         }
       };
@@ -43,8 +43,8 @@ const mediaReducer = (state = defaultState, action) => {
       // append new items to end of existing array
       return {
         ...state,
-        isFetching: {
-          ...state.isFetching,
+        requestStatus: {
+          ...state.requestStatus,
           [action.payload.tagId]: false
         },
         mediaItems: [
@@ -55,14 +55,14 @@ const mediaReducer = (state = defaultState, action) => {
  
 
     /* - A fetch request resulted in an error - */
-    // the error handling proper happens in the query or thunk action, the reducer only needs to show it's no longer fetching
+    // in a real app, the error handling proper happens in the query or thunk action, the reducer only needs to show it's no longer fetching
     case FETCH_MEDIA_ERROR:
 
       return {
         ...state,
-        isFetching: {
-          ...state.isFetching,
-          [action.payload.tagId]: false
+        requestStatus: {
+          ...state.requestStatus,
+          [action.payload.tagId]: 'ERROR'
         }
       };
 
