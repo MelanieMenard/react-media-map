@@ -10,10 +10,17 @@
 /*---------------------------------------------------------------------*/
 
 // responsive breakpoints
+$breakpoint-small-smartphone-max-width: 340px;
+$breakpoint-large-smartphone-min-width: $breakpoint-small-smartphone-max-width + 1px;
 $breakpoint-smartphone-max-width: 640px;
-$breakpoint-tablet-portrait-max-width: 768px;
+$breakpoint-tablet-portrait-min-width: $breakpoint-smartphone-max-width + 1px;
+$breakpoint-tablet-portrait-max-width: 767px;
 $breakpoint-tablet-landscape-min-width: $breakpoint-tablet-portrait-max-width + 1px;
-$breakpoint-tablet-max-width: 1000px;
+$breakpoint-tablet-landscape-max-width: 1024px;
+$breakpoint-desktop-min-width: $breakpoint-tablet-landscape-max-width + 1px;
+$breakpoint-standard-desktop-max-width: 1365px;
+$breakpoint-large-desktop-min-width: $breakpoint-standard-desktop-max-width + 1px;
+
 
 $header-height: 60px;
 

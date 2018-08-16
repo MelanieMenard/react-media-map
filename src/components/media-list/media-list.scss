@@ -1,0 +1,66 @@
+@import 'style/scss-shared/_shared.scss';
+
+.media-list
+{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.media-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $brand_accent_light;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  @media screen and (max-width: $breakpoint-smartphone-max-width) {
+    width: 100%;
+    margin-bottom: $small_content_margin;
+  }
+  @media screen and (min-width: $breakpoint-tablet-portrait-min-width) and (max-width: $breakpoint-tablet-portrait-max-width) {
+    margin-bottom: $small_content_margin;
+    /* MM: this is to get flexbox to force a margin of 5px on 1 of the 2 boxes */
+    width: calc(50% - #{$small_content_margin/2});
+  }
+  @media screen and (min-width: $breakpoint-tablet-landscape-min-width) and (max-width: $breakpoint-tablet-landscape-max-width) {
+    margin-bottom: $small_content_margin;
+    /* MM: this is to get flexbox to force a margin of 5px on 2 of the 3 boxes */
+    width: calc(33% - #{$small_content_margin * 2 / 3});
+  }
+  @media screen and (min-width: $breakpoint-desktop-min-width) and (max-width: $breakpoint-standard-desktop-max-width){
+    margin-bottom: $medium_content_margin;
+    /* MM: this is to get flexbox to force a margin of 10px on 3 of the 4 boxes */
+    width: calc(25% - #{$medium_content_margin * 3 / 4});
+  }
+  @media screen and (min-width: $breakpoint-large-desktop-min-width) {
+    margin-bottom: $standard_content_margin;
+    /* MM: this is to get flexbox to force a margin of 20px on 5 of the 6 boxes */
+    width: calc(16.6% - #{$medium_content_margin * 5 / 6});
+  } 
+}
+
+.media-image {
+  width: 100%;
+  @include fixed-ratio (100%);
+  background-style: cover;
+}
+
+.media-info {
+  display: block;
+  width: 100%;
+  background: #333;
+  background: rgba(0,0,0,0.7);
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  position:absolute;
+  bottom: 0;
+}
+
+.media-item .media-title {
+  color: $brand_accent_light;
+  padding: 10px 20px;
+  text-align: center;
+}

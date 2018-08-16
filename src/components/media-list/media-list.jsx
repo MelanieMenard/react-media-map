@@ -11,11 +11,17 @@ class Media extends React.Component {
   render(){
     const media = this.props.media;
 
+    let inlineStyle = {
+      backgroundImage: `url(${media.image})`
+    };
+
     return (
       <li className="media-item">
-        <a href={media.link} target="_blank">
-          <img title={media.title} src={media.image} alt={media.title} className="thumb" />' 
-          <p className="media-title">{media.title}</p>
+        <a className="media-link"href={media.link} target="_blank">
+          <div className="media-image" style={ inlineStyle }></div> 
+          <div className="media-info">
+            <p className="media-title">{media.title}</p>
+          </div>
         </a>
       </li>
     )
