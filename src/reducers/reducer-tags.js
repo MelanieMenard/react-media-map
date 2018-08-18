@@ -19,26 +19,32 @@ const defaultState = {
     "monksHouse" : {
       displayName : "Monks House",
       searchQuery : "Monks House Sussex",
+      matchingItems: 0,
     },
     "charleston" : {
       displayName : "Charleston",
       searchQuery : "Charleston House Sussex",
+      matchingItems: 0,
     },
     "farleyFarm" : {
       displayName : "Farley Farm",
       searchQuery : "Farley Farm Sussex",
+      matchingItems: 0,
     },
     "sissinghurstCastle" : {
       displayName : "Sissinghurst Castle",
       searchQuery : "Sissinghurst Castle",
+      matchingItems: 0,
     },
     "knole" : {
       displayName : "Knole",
       searchQuery : "Knole House Kent",
+      matchingItems: 0,
     },
     "prospectCottage" : {
       displayName : "Prospect Cottage",
       searchQuery : "Prospect Cottage Dungeness",
+      matchingItems: 0,
     },
   },
 
@@ -77,7 +83,7 @@ const tagsReducer = (state = defaultState, action) => {
           ...state.locationsById,
           [action.payload.tagId]: {
             ...state.locationsById[action.payload.tagId],
-            matchingItems: [action.payload.totalItems]
+            matchingItems: parseInt([action.payload.totalItems])
           }
         }
       };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {scaleLog} from "d3-scale";
 import { setSelectedTag } from '../../actions/actions-tags';
 import './tag-cloud.css';
 
@@ -22,16 +23,17 @@ class Tag extends React.Component {
     const tagId = this.props.tagId;
     const tag = this.props.tag;
     const isSelected = this.props.isSelected;
-    let matchingItems = (tag.matchingItems) ? " ("+tag.matchingItems+")" : "";
+    const tagPopularity = this.props.tagPopularity;
+    let matchingItemsString = (tag.matchingItems) ? " ("+tag.matchingItems+")" : "";
 
     return (
-       <li className={"tag-item" + (isSelected ? " selected" : "")}>
+       <li className={"tag-item popularity-"+tagPopularity+ (isSelected ? " selected" : "")}>
           <a
             className="tag"
             onClick={(e) => {this.onTagClicked(e, tagId)}}
             >
               <p className="tag-title">
-                {tag.displayName}{matchingItems}
+                {tag.displayName}{matchingItemsString}
               </p>     
           </a>
         </li>
@@ -54,9 +56,16 @@ Tag.propTypes = {
 // because we have normalised data with lookup object byId, we need more container components
 // as each tag needs to find its full object, the parent only being able to pass the id down from the array
 const mapStateToPropsTag = (state, ownProps) => {
+
+  const tag = state.tags.locationsById[ownProps.tagId];
+
+  // calculate tag popularity relative to scale passed down by list component parent
+  let tagPopularity = (tag.matchingItems) ? Math.round (ownProps.popularityScale(tag.matchingItems)) : 0;
+
   return {
-    tag: state.tags.locationsById[ownProps.tagId],
-    isSelected: (ownProps.tagId === state.tags.selectedTag)
+    tag: tag,
+    isSelected: (ownProps.tagId === state.tags.selectedTag),
+    tagPopularity: tagPopularity
   };
 };
 
@@ -79,10 +88,12 @@ Tag = connect(
 /* --- Tag cloud presentational component --- */
 
 class TagCloud extends React.Component {
-  
+
   render(){
 
     const tags = this.props.tags;
+    // pass down popularity scale to each tag so it can calculate its relative size
+    const popularityScale = this.props.popularityScale;
 
     return (
       <div className="tag-cloud">
@@ -91,6 +102,7 @@ class TagCloud extends React.Component {
               <Tag
                 key={tag}
                 tagId={tag}
+                popularityScale={popularityScale}
               />
             ))}
           </ul> 
@@ -117,11 +129,32 @@ TagCloud.propTypes = {
 // you can either apply the container component to a presentational component if all it does is feed data
 // or give a different name when it does some meaningful business logic that changes the meaning of the presentational component, for example, filtering the data
 
+// utility function to find the min and max of matchingItems for all tags, and make d3 scale from it
+// used in tag item component but calculated once on tag list component, then passed down to each
+const calculateTagsPopularityScale = (tags) => {
+  let tagResultCountArray = tags.allLocations.map( tagId => {
+    return tags.locationsById[tagId].matchingItems;
+  });
+  // sort integers
+  tagResultCountArray.sort((a, b) => {
+    return a - b;
+  });
+  // prevent 0 value on Log scale
+  let resultsMin = tagResultCountArray[0] || 1;
+  let resultsMax = tagResultCountArray[tagResultCountArray.length-1]  || 1;
+  let popularityScale = scaleLog();
+  popularityScale.domain([resultsMin, resultsMax]).range([1,6]);
+  return popularityScale;
+};
+
 // the parent components can still pass props directly to the presentational component, and mapStateToProps can access them as ownProps
 // the presentational component does not know whether its props come from the parent (ownProps) or the container, the difference is only visible in mapStateToProps
 const mapStateToPropsTagCloud = (state, ownProps) => {
+  // find the min and max of matchingItems for all tags, and make d3 scale from it
+  const popularityScale = calculateTagsPopularityScale(state.tags);
   return {
-    tags: state.tags.allLocations
+    tags: state.tags.allLocations,
+    popularityScale: popularityScale
   };
 };
 
