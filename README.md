@@ -1,6 +1,6 @@
 # React Media Map
 
-Demo App fetching pictures related to a predefined list of Artists' Homes on Flickr API. View all locations, or filter images by location. Show relative popularity using D3 based on total matching images on the server (even though we only fetch 20 fot this demo).
+Demo app fetching pictures related to a predefined list of Artists' Homes on Flickr API. View all locations, or filter images by location. Show relative popularity using D3 based on total matching images on the server (even though we only fetch 20 for this demo). Next step would be to display locations on a map using d3 geo mapping but I didn't have time..
 
 Bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
