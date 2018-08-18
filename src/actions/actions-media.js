@@ -6,7 +6,7 @@
 /*   https://github.com/redux-utilities/flux-standard-action
 /* ------------------------------------------- */
 
-import { getFlickrFeedQuery } from '../queries/axios-queries';
+import { getFlickrSearchQuery } from '../queries/axios-queries';
 
 
 /* --- Actions Types --- */
@@ -32,11 +32,12 @@ const fetchMediaRequest = (tagId) => ({
   }
 });
 
-const fetchMediaSuccess = (tagId, items) => ({
+const fetchMediaSuccess = (tagId, items, totalItems) => ({
   type: FETCH_MEDIA_SUCCESS,
   payload: {
     tagId,
-    items
+    items,
+    totalItems
   }
 });
 
@@ -63,17 +64,19 @@ const fetchAllMedia = () => (dispatch, getState) => {
     dispatch(fetchMediaRequest (tagId));
 
     // REST get request
-    return getFlickrFeedQuery (searchString)
+    return getFlickrSearchQuery (searchString)
       .then((response) => {
         console.log('fetchMedia RESPONSE for '+searchString+' ', response);
 
         // add tag to the result
-        let taggedItems = response.map((item) => {
+        let taggedItems = response.items.map((item) => {
           item.tags = [tagId];
           return item;
         });
 
-        dispatch(fetchMediaSuccess(tagId,taggedItems));
+        const totalItems = response.total;
+
+        dispatch(fetchMediaSuccess(tagId,taggedItems,totalItems));
 
       })
       .catch((error)=> {

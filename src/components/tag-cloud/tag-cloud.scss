@@ -17,19 +17,65 @@
 
 .tag {
   display: inline-block;
-  padding: 6px 8px;
+  .popularity-0 & {
+    padding: 1px 2px;
+  }
+  .popularity-1 & {
+    padding: 2px 3px;
+  }
+  .popularity-2 & {
+    padding: 4px 6px;
+  }
+  .popularity-3 & {
+    padding: 6px 9px;
+  }
+  .popularity-4 & {
+    padding: 8px 12px;
+  }
+  .popularity-5 & {
+    padding: 10px 15px;
+  }
+  .popularity-6 & {
+    padding: 12px 18px;
+  }
 }
 
 .tag-title {
 	display: inline-block;
-	font-size: 20px;
-	line-height: 22px;
 	color: $brand_accent_medium;
 	margin: 0;
+  font-weight: 500;
+  .popularity-0 & {
+    font-size: $font-size_extra_small;
+    line-height: $font-size_extra_small;
+  }
+  .popularity-1 & {
+    font-size: $font_size_small;
+    line-height: $font_size_small;
+  }
+  .popularity-2 & {
+    font-size: $font_size_small + 2px;
+    line-height: $font_size_small + 2px;
+  }
+  .popularity-3 & {
+    font-size: $font_size_small + 4px;
+    line-height: $font_size_small + 4px;
+  }
+  .popularity-4 & {
+    font-size: $font_size_small + 6px;
+    line-height: $font_size_small + 6px;
+  }
+  .popularity-5 & {
+    font-size: $font_size_small + 8px;
+    line-height: $font_size_small + 8px;
+  }
+  .popularity-6 & {
+    font-size: $font_size_small + 10px;
+    line-height: $font_size_small + 10px;
+  }
 }
 
 .selected .tag-title,
 .tag:hover .tag-title {
 	color: $brand_accent_vivid;
-	font-weight: 900;
 }
