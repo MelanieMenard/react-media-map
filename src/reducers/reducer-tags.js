@@ -6,6 +6,7 @@
 /* ------------------------------------------- */
 
 import { SET_SELECTED_TAG } from '../actions/actions-tags';
+import { FETCH_MEDIA_SUCCESS } from '../actions/actions-media';
 
 
 const defaultState = {
@@ -18,26 +19,32 @@ const defaultState = {
     "monksHouse" : {
       displayName : "Monks House",
       searchQuery : "Monks House Sussex",
+      matchingItems: 0,
     },
     "charleston" : {
       displayName : "Charleston",
       searchQuery : "Charleston House Sussex",
+      matchingItems: 0,
     },
     "farleyFarm" : {
       displayName : "Farley Farm",
       searchQuery : "Farley Farm Sussex",
+      matchingItems: 0,
     },
     "sissinghurstCastle" : {
       displayName : "Sissinghurst Castle",
       searchQuery : "Sissinghurst Castle",
+      matchingItems: 0,
     },
     "knole" : {
       displayName : "Knole",
       searchQuery : "Knole House Kent",
+      matchingItems: 0,
     },
     "prospectCottage" : {
       displayName : "Prospect Cottage",
       searchQuery : "Prospect Cottage Dungeness",
+      matchingItems: 0,
     },
   },
 
@@ -63,6 +70,22 @@ const tagsReducer = (state = defaultState, action) => {
       return {
         ...state,
         selectedTag: (state.selectedTag !== action.payload.tagId) ? action.payload.tagId : null
+      };
+
+    
+    /* - A fetch request successfully returned data - */
+    case FETCH_MEDIA_SUCCESS:
+
+      // how many matches there are on the server
+      return {
+        ...state,
+        locationsById: {
+          ...state.locationsById,
+          [action.payload.tagId]: {
+            ...state.locationsById[action.payload.tagId],
+            matchingItems: parseInt([action.payload.totalItems])
+          }
+        }
       };
 
 
