@@ -6,6 +6,7 @@
 /* ------------------------------------------- */
 
 import { SET_SELECTED_TAG } from '../actions/actions-tags';
+import { FETCH_MEDIA_SUCCESS } from '../actions/actions-media';
 
 
 const defaultState = {
@@ -63,6 +64,22 @@ const tagsReducer = (state = defaultState, action) => {
       return {
         ...state,
         selectedTag: (state.selectedTag !== action.payload.tagId) ? action.payload.tagId : null
+      };
+
+    
+    /* - A fetch request successfully returned data - */
+    case FETCH_MEDIA_SUCCESS:
+
+      // how many matches there are on the server
+      return {
+        ...state,
+        locationsById: {
+          ...state.locationsById,
+          [action.payload.tagId]: {
+            ...state.locationsById[action.payload.tagId],
+            matchingItems: [action.payload.totalItems]
+          }
+        }
       };
 
 

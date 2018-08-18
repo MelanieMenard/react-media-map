@@ -17,7 +17,7 @@ class Media extends React.Component {
 
     return (
       <li className="media-item">
-        <a className="media-link"href={media.link} target="_blank">
+        <a className="media-link"href={media.image} target="_blank">
           <div className="media-image" style={ inlineStyle }></div> 
           <div className="media-info">
             <p className="media-title">{media.title}</p>
@@ -62,27 +62,24 @@ class MediaList extends React.Component {
     let userMessage = '';
     // show spinner if we are fetching and no items yet returned (otherwise show what is there and update as more get fetched)
     const showSpinner = this.props.isFetching && !mediaItems.length;
-    const showCORSMessage = this.props.showCORSMessage;
+    const showErrorMessage = this.props.showErrorMessage;
     if (showSpinner) {
       userMessage = '<p>Fetching!</p>';
     }
-    // Flickr API has CORS issues when used with axios. I had only used Flickr API with jquery ajax and JSONP so never had this problem before, and used an API I already knew for this code test, as short on time. 
-    // I implemented simple error handling to tell user to install the workaround Chrome extension: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
-    // this problem would not happen in a production app using API designed to work with it
-    else if (showCORSMessage) {
-      userMessage = '<p>This demo app needs the Allow-Control-Allow-Origin plugin to be able to receive data from the API. Please download the <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en" target="_blank">plugin for Chrome</a>, enable it and reload the app.</p>';
+    else if (showErrorMessage) {
+      userMessage = '<p>Error fetching media from server.</p>';
     }
   
     return (
       <div className="media">
 
-        {(showSpinner || showCORSMessage) ? (
+        {(showSpinner || showErrorMessage) ? (
           <div className="message" dangerouslySetInnerHTML={{__html: userMessage}}></div>
         ) : (
           <ul className="media-list">
             {mediaItems.map( media => (
               <Media
-                key={media.link}
+                key={media.id}
                 media={media}
               />
             ))}
@@ -129,13 +126,11 @@ const mapStateToProps = (state, ownProps) => {
   // requestStatus is an object listing all requests by tag, see if any is still fetching
   let fetchingStatus = Object.values(state.media.requestStatus);
   let isFetching = (fetchingStatus) ? fetchingStatus.includes(true) : false;
-  // MM: because the API does not return data without the CORS plugin
-  // we assume it is the cause of error and show a message telling user to download the plugin
-  let showCORSMessage = (fetchingStatus) ? fetchingStatus.includes('ERROR') : false;
+  let showErrorMessage = (fetchingStatus) ? fetchingStatus.includes('ERROR') : false;
   return {
     mediaItems: getFilteredMediaItems(state),
     isFetching: isFetching,
-    showCORSMessage: showCORSMessage
+    showErrorMessage: showErrorMessage
   };
 };
 

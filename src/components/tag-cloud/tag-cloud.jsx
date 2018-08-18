@@ -22,6 +22,7 @@ class Tag extends React.Component {
     const tagId = this.props.tagId;
     const tag = this.props.tag;
     const isSelected = this.props.isSelected;
+    let matchingItems = (tag.matchingItems) ? " ("+tag.matchingItems+")" : "";
 
     return (
        <li className={"tag-item" + (isSelected ? " selected" : "")}>
@@ -30,7 +31,7 @@ class Tag extends React.Component {
             onClick={(e) => {this.onTagClicked(e, tagId)}}
             >
               <p className="tag-title">
-                {tag.displayName}
+                {tag.displayName}{matchingItems}
               </p>     
           </a>
         </li>
