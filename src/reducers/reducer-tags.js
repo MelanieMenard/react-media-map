@@ -83,7 +83,7 @@ const tagsReducer = (state = defaultState, action) => {
           ...state.locationsById,
           [action.payload.tagId]: {
             ...state.locationsById[action.payload.tagId],
-            matchingItems: parseInt([action.payload.totalItems])
+            matchingItems: parseInt(action.payload.totalItems)
           }
         }
       };
